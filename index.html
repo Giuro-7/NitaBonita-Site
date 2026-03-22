@@ -16,11 +16,26 @@
         
         html { scroll-behavior: smooth; }
         
-        /* Ajuste de Tipografia para Mobile (Portrait) */
+        /* Ajuste de Tipografia Dinâmica para Mobile (Portrait) */
         @media (max-aspect-ratio: 1/1) {
-            h1 { font-size: 2.8rem !important; line-height: 1.2 !important; }
-            h2 { font-size: 2.5rem !important; line-height: 1.1 !important; }
-            .hero-p { font-size: 1.1rem !important; }
+            h1 { 
+                font-size: clamp(2.5rem, 10vw, 4rem) !important; 
+                line-height: 1.1 !important;
+                letter-spacing: 0.15em !important;
+            }
+            h2 { 
+                font-size: clamp(2rem, 8vw, 3.5rem) !important; 
+                line-height: 1.1 !important;
+            }
+            .hero-p { 
+                font-size: 1rem !important; 
+                padding: 0 1.5rem !important;
+            }
+            /* Ajuste de escala do vídeo no mobile para não ocupar o ecrã todo */
+            .video-container {
+                width: 160px !important;
+                height: 160px !important;
+            }
         }
 
         /* Animações */
@@ -113,8 +128,8 @@
                 <div class="h-1"></div>
                 
                 <div class="flex flex-col items-center justify-center flex-grow w-full">
-                    <div class="mb-8 md:mb-12 w-48 h-48 md:w-80 md:h-80 flex items-center justify-center overflow-hidden rounded-full bg-black/5 shadow-2xl shrink-0">
-                        <video autoplay loop muted playsinline class="w-full h-full object-cover scale-110">
+                    <div class="video-container mb-8 md:mb-12 w-48 h-48 md:w-80 md:h-80 flex items-center justify-center overflow-hidden rounded-full bg-black/5 shadow-2xl shrink-0">
+                        <video autoplay loop muted playsinline class="w-full h-full object-cover scale-100">
                             <source src="assets/Logo-smoke.mp4" type="video/mp4">
                         </video>
                     </div>
@@ -130,7 +145,7 @@
                     </p>
                 </div>
 
-                <div class="w-full flex flex-col items-center gap-4 mt-8 animate-fadeIn" style="animation-delay: 0.8s;">
+                <div class="w-full flex flex-col items-center gap-0 mt-8 animate-fadeIn" style="animation-delay: 0.8s;">
                     <div class="animate-bounce">
                         <div class="w-6 h-10 border-2 border-black rounded-full flex justify-center p-1">
                             <div class="w-1 h-2 bg-black rounded-full animate-scrollDot"></div>
@@ -281,13 +296,18 @@
             const contactPos = contactSection.offsetTop;
 
             // Barra de Progresso
-            progressBar.style.width = ((scrollPos / fullHeight) * 100) + "%";
+            if (progressBar) {
+                progressBar.style.width = ((scrollPos / fullHeight) * 100) + "%";
+            }
 
-            // Botão HOME
+            // Botão HOME (Direita) - CORREÇÃO AQUI
             if (scrollPos > windowHeight * 0.8) { 
+                // Aparece
                 navControl.classList.remove('opacity-0', 'pointer-events-none');
                 navControl.classList.add('opacity-100', 'pointer-events-auto');
             } else {
+                // Desaparece
+                navControl.classList.remove('opacity-100', 'pointer-events-auto');
                 navControl.classList.add('opacity-0', 'pointer-events-none');
             }
 
