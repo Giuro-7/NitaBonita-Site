@@ -1,0 +1,1359 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <script src="https://cdn.tailwindcss.com"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CHROMANTIC 01 — Pink Edition</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Grotesk:wght@300;400;700&family=Fraunces:ital,opsz,wght@0,9..144,900;1,9..144,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink: #FF2D78;
+    --blush: #FFB3CC;
+    --cream: #FAF5EF;
+    --dark: #241c20;
+    --muted: #B8869A;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--cream);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    width: 16px; height: 16px;
+    background: var(--pink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, opacity 0.2s;
+    transform: translate(-50%, -50%);
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    width: 40px; height: 40px;
+    border: 1.5px solid var(--pink);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transition: transform 0.35s cubic-bezier(.25,.46,.45,.94), opacity 0.2s;
+    transform: translate(-50%, -50%);
+    opacity: 0.5;
+  }
+
+  /* Progress bar */
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: var(--pink);
+    z-index: 1000;
+    transition: width 0.3s ease;
+    box-shadow: 0 0 12px var(--pink);
+  }
+
+  /* Nav dots */
+  .nav-dots {
+    position: fixed;
+    right: 28px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1000;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .nav-dot {
+    width: 8px; height: 8px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,45,120,0.5);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .nav-dot.active {
+    background: var(--pink);
+    border-color: var(--pink);
+    box-shadow: 0 0 10px var(--pink);
+    transform: scale(1.4);
+  }
+
+  /* Slides */
+  .slide {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 60px;
+  }
+
+  /* Grain overlay */
+  .slide::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.4;
+  }
+
+  .slide-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ======= SLIDE 1 — HERO ======= */
+  #slide-1 {
+    background: var(--dark);
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 60% 50%, rgba(255,45,120,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-blob {
+    position: absolute;
+    right: -100px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 600px;
+    height: 600px;
+    border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+    background: linear-gradient(135deg, rgba(255,45,120,0.35), rgba(255,179,204,0.15));
+    filter: blur(60px);
+    animation: morphBlob 8s ease-in-out infinite;
+  }
+  @keyframes morphBlob {
+    0%, 100% { border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%; }
+    33% { border-radius: 40% 60% 30% 70% / 60% 40% 60% 40%; }
+    66% { border-radius: 70% 30% 50% 50% / 30% 70% 40% 60%; }
+  }
+
+  .hero-label {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 24px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.3s forwards;
+  }
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(96px, 14vw, 200px);
+    line-height: 0.85;
+    letter-spacing: -2px;
+    margin-bottom: 32px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.5s forwards;
+  }
+  .hero-title span { color: var(--pink); }
+  .hero-sub {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(18px, 2.5vw, 28px);
+    font-weight: 300;
+    font-style: italic;
+    color: var(--blush);
+    max-width: 500px;
+    line-height: 1.5;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.7s forwards;
+  }
+  .hero-date {
+    margin-top: 48px;
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    opacity: 0;
+    animation: fadeUp 0.8s 0.9s forwards;
+  }
+  .hero-date-pill {
+    background: var(--pink);
+    color: white;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px 24px;
+    border-radius: 2px;
+  }
+  .hero-date-text {
+    font-size: 14px;
+    color: var(--muted);
+    letter-spacing: 1px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    opacity: 0;
+    animation: fadeIn 1s 1.5s forwards;
+  }
+  .scroll-line {
+    width: 1px;
+    height: 50px;
+    background: linear-gradient(to bottom, var(--pink), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+  .scroll-text {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ======= SLIDE 2 — PROBLEM ======= */
+  #slide-2 {
+    background: #0A0A0A;
+  }
+
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .big-stat {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 18vw, 240px);
+    line-height: 1;
+    color: rgba(255,45,120,0.08);
+    position: absolute;
+    top: -30px;
+    left: -20px;
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .problem-statement {
+    position: relative;
+  }
+  .problem-tag {
+    display: inline-block;
+    border: 1px solid rgba(255,45,120,0.4);
+    color: var(--pink);
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 6px 14px;
+    margin-bottom: 28px;
+  }
+  .problem-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .problem-headline em {
+    color: var(--pink);
+    font-style: italic;
+  }
+  .problem-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(250,245,239,0.6);
+    max-width: 440px;
+  }
+
+  .phones-visual {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    align-items: flex-end;
+  }
+  .phone-row {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    margin-bottom: 4px;
+  }
+  .phone-icon {
+    width: 32px;
+    height: 52px;
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 5px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s;
+  }
+  .phone-icon::after {
+    content: '';
+    position: absolute;
+    inset: 4px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 2px;
+    animation: screenFlicker 3s infinite;
+  }
+  .phone-icon.crossed {
+    border-color: rgba(255,45,120,0.5);
+  }
+  .phone-icon.crossed::before {
+    content: '✕';
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--pink);
+    font-size: 14px;
+    z-index: 2;
+  }
+  @keyframes screenFlicker {
+    0%, 90%, 100% { opacity: 0.08; }
+    91%, 95% { opacity: 0.3; }
+  }
+
+  .manifesto-quote {
+    grid-column: 1 / -1;
+    text-align: center;
+    padding: 60px 0 0;
+    border-top: 1px solid rgba(255,45,120,0.2);
+    margin-top: 20px;
+  }
+  .manifesto-quote blockquote {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 3.5vw, 42px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.3;
+    color: var(--cream);
+  }
+  .manifesto-quote blockquote strong {
+    color: var(--pink);
+    font-style: normal;
+    font-weight: 900;
+  }
+
+  /* ======= SLIDE 3 — CONCEPT ======= */
+  #slide-3 {
+    background: var(--pink);
+    color: var(--dark);
+  }
+  #slide-3::after { opacity: 0.08; }
+
+  .concept-inner {
+    width: 100%;
+  }
+  .concept-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: rgba(13,2,8,0.5);
+    margin-bottom: 40px;
+  }
+  .concept-equation {
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 60px;
+  }
+  .concept-term {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 9vw, 130px);
+    line-height: 1;
+    color: var(--dark);
+  }
+  .concept-operator {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 6vw, 80px);
+    color: rgba(13,2,8,0.35);
+  }
+  .concept-result {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(60px, 9vw, 130px);
+    line-height: 1;
+    color: white;
+    text-shadow: -3px 3px 0 var(--dark);
+  }
+
+  .concept-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .concept-card {
+    background: rgba(13,2,8,0.08);
+    padding: 28px 24px;
+    border-top: 3px solid rgba(13,2,8,0.2);
+  }
+  .concept-card:first-child { border-color: var(--dark); }
+  .concept-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: var(--dark);
+  }
+  .concept-card-body {
+    font-size: 14px;
+    line-height: 1.6;
+    color: rgba(13,2,8,0.65);
+  }
+
+  /* ======= SLIDE 4 — FORMAT ======= */
+  #slide-4 {
+    background: var(--cream);
+    color: var(--dark);
+  }
+  #slide-4::after { opacity: 0.06; }
+
+  .format-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+  .format-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(52px, 7vw, 100px);
+    line-height: 0.9;
+    color: var(--dark);
+    margin-bottom: 60px;
+  }
+  .format-headline span { color: var(--pink); }
+
+  .timeline {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 0;
+    position: relative;
+  }
+  .timeline::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(to right, var(--pink), rgba(255,45,120,0.2));
+  }
+  .timeline-stop {
+    padding: 48px 20px 0;
+    position: relative;
+  }
+  .timeline-dot {
+    width: 14px; height: 14px;
+    border-radius: 50%;
+    background: var(--pink);
+    position: absolute;
+    top: 9px;
+    left: 20px;
+    box-shadow: 0 0 0 4px rgba(255,45,120,0.15);
+  }
+  .timeline-time {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 36px;
+    color: var(--pink);
+    display: block;
+    margin-bottom: 8px;
+  }
+  .timeline-name {
+    font-weight: 700;
+    font-size: 15px;
+    margin-bottom: 8px;
+    color: var(--dark);
+  }
+  .timeline-desc {
+    font-size: 13px;
+    line-height: 1.6;
+    color: rgba(13,2,8,0.55);
+  }
+
+  .format-vs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin-top: 60px;
+  }
+  .vs-col {
+    padding: 28px;
+  }
+  .vs-col:first-child {
+    background: rgba(13,2,8,0.06);
+  }
+  .vs-col:last-child {
+    background: var(--pink);
+    color: white;
+  }
+  .vs-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    opacity: 0.5;
+  }
+  .vs-col:last-child .vs-title { opacity: 1; }
+  .vs-item {
+    font-size: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: rgba(13,2,8,0.6);
+  }
+  .vs-col:last-child .vs-item {
+    border-color: rgba(255,255,255,0.2);
+    color: white;
+  }
+  .vs-icon { font-size: 16px; flex-shrink: 0; }
+
+  /* ======= SLIDE 5 — ARTISTS ======= */
+  #slide-5 {
+    background: var(--dark);
+  }
+
+  .artists-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+  .artists-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.9;
+    margin-bottom: 60px;
+  }
+  .artists-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+  .artist-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,45,120,0.1);
+    padding: 32px 24px;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(.25,.46,.45,.94);
+  }
+  .artist-card:hover {
+    background: rgba(255,45,120,0.08);
+    border-color: rgba(255,45,120,0.4);
+    transform: translateY(-4px);
+  }
+  .artist-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--pink);
+    transform: scaleX(0);
+    transition: transform 0.4s ease;
+    transform-origin: left;
+  }
+  .artist-card:hover::before { transform: scaleX(1); }
+  .artist-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 64px;
+    color: rgba(255,45,120,0.08);
+    line-height: 1;
+    position: absolute;
+    right: 16px;
+    top: 16px;
+  }
+  .artist-name {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 32px;
+    letter-spacing: 1px;
+    color: var(--cream);
+    margin-bottom: 6px;
+  }
+  .artist-genre {
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+  .artist-vibe {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(250,245,239,0.5);
+  }
+
+  /* ======= SLIDE 6 — AUDIENCE ======= */
+  #slide-6 {
+    background: #110A0D;
+  }
+
+  .audience-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .venn {
+    position: relative;
+    width: 360px;
+    height: 360px;
+  }
+  .venn-circle {
+    position: absolute;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 20px;
+    letter-spacing: 1px;
+    mix-blend-mode: screen;
+  }
+  .vc1 {
+    width: 220px; height: 220px;
+    background: rgba(255,45,120,0.35);
+    top: 0; left: 20px;
+  }
+  .vc2 {
+    width: 220px; height: 220px;
+    background: rgba(255,45,120,0.25);
+    bottom: 0; left: 20px;
+  }
+  .vc3 {
+    width: 220px; height: 220px;
+    background: rgba(255,45,120,0.3);
+    top: 70px; right: 0;
+  }
+  .vc-label {
+    position: absolute;
+    font-family: 'Space Grotesk', sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 1px;
+    text-align: center;
+    color: white;
+  }
+  .vcl1 { top: 50px; left: 50px; }
+  .vcl2 { bottom: 50px; left: 50px; }
+  .vcl3 { top: 120px; right: 20px; }
+  .venn-center {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-align: center;
+    background: rgba(255,45,120,0.6);
+    padding: 14px;
+    border-radius: 50%;
+    width: 80px; height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1.2;
+    z-index: 2;
+  }
+
+  .audience-text {
+    padding-right: 20px;
+  }
+  .audience-headline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 28px;
+  }
+  .audience-headline em { color: var(--pink); font-style: italic; }
+  .audience-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: rgba(250,245,239,0.6);
+    margin-bottom: 32px;
+  }
+  .social-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    background: rgba(255,45,120,0.12);
+    border: 1px solid rgba(255,45,120,0.3);
+    border-left: 3px solid var(--pink);
+    padding: 16px 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--cream);
+  }
+  .social-badge strong { color: var(--pink); }
+
+  /* ======= SLIDE 7 — IMPACT ======= */
+  #slide-7 {
+    background: var(--dark);
+  }
+
+  .impact-label {
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 16px;
+  }
+  .impact-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.9;
+    margin-bottom: 60px;
+  }
+
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+  .pillar {
+    padding: 40px 32px;
+    border: 1px solid rgba(255,255,255,0.06);
+    position: relative;
+    overflow: hidden;
+  }
+  .pillar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at top left, rgba(255,45,120,0.08), transparent 70%);
+    pointer-events: none;
+  }
+  .pillar-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(255,45,120,0.1);
+    line-height: 1;
+    margin-bottom: 16px;
+  }
+  .pillar-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 12px;
+    color: var(--cream);
+  }
+  .pillar-body {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(250,245,239,0.5);
+  }
+
+  /* ======= SLIDE 8 — GROWTH ======= */
+  #slide-8 {
+    background: #0A0A0A;
+  }
+
+  .growth-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(48px, 7vw, 90px);
+    line-height: 0.9;
+    margin-bottom: 60px;
+  }
+
+  .phases {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    position: relative;
+    align-items: start;
+  }
+  .phases::before {
+    content: '';
+    position: absolute;
+    top: 28px;
+    left: 5%;
+    right: 5%;
+    height: 2px;
+    background: linear-gradient(to right, var(--pink), rgba(255,150,0,0.6), rgba(100,255,100,0.4));
+  }
+  .phase {
+    padding: 60px 28px 28px;
+    position: relative;
+  }
+  .phase-dot {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 18px; height: 18px;
+    border-radius: 50%;
+    border: 3px solid;
+  }
+  .phase:nth-child(1) .phase-dot { background: var(--pink); border-color: var(--pink); box-shadow: 0 0 12px var(--pink); }
+  .phase:nth-child(2) .phase-dot { background: #A060FF; border-color: #A060FF; box-shadow: 0 0 12px #A060FF; }
+  .phase:nth-child(3) .phase-dot { background: #40FF90; border-color: #40FF90; box-shadow: 0 0 12px #40FF90; }
+
+  .phase-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+  .phase-year {
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--pink);
+    margin-bottom: 10px;
+  }
+  .phase:nth-child(2) .phase-year { color: #A060FF; }
+  .phase:nth-child(3) .phase-year { color: #40FF90; }
+
+  .phase-title {
+    font-family: 'Fraunces', serif;
+    font-size: 22px;
+    font-weight: 900;
+    margin-bottom: 14px;
+  }
+  .phase-body {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(250,245,239,0.5);
+  }
+
+  /* ======= SLIDE 9 — CTA ======= */
+  #slide-9 {
+    background: var(--pink);
+    min-height: 100vh;
+  }
+  #slide-9::after { opacity: 0.06; }
+
+  .cta-inner {
+    text-align: center;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  .cta-smiley {
+    font-size: 80px;
+    display: block;
+    margin-bottom: 32px;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+  .cta-headline {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(64px, 10vw, 140px);
+    line-height: 0.85;
+    color: var(--dark);
+    margin-bottom: 32px;
+  }
+  .cta-sub {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(18px, 2.5vw, 26px);
+    font-weight: 300;
+    font-style: italic;
+    color: rgba(13,2,8,0.65);
+    max-width: 600px;
+    margin: 0 auto 48px;
+    line-height: 1.5;
+  }
+  .cta-contact {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    background: var(--dark);
+    color: white;
+    padding: 24px 48px;
+    font-size: 16px;
+    line-height: 1.8;
+    text-decoration: none;
+    transition: transform 0.3s;
+  }
+  .cta-contact:hover { transform: scale(1.04); }
+  .cta-contact strong { font-size: 20px; letter-spacing: 1px; }
+  .cta-contact span { font-size: 13px; color: rgba(255,255,255,0.6); }
+
+  /* ======= ANIMATIONS ======= */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s cubic-bezier(.25,.46,.45,.94), transform 0.7s cubic-bezier(.25,.46,.45,.94);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+  .reveal-delay-5 { transition-delay: 0.5s; }
+
+  /* Large decorative text behind sections */
+  .deco-bg-text {
+    position: absolute;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(120px, 18vw, 220px);
+    color: rgba(255,45,120,0.04);
+    white-space: nowrap;
+    pointer-events: none;
+    user-select: none;
+    z-index: 0;
+    line-height: 1;
+  }
+
+  @media (max-width: 900px) {
+    .problem-grid, .audience-grid, .format-vs, .concept-cards,
+    .artists-grid, .pillars, .phases, .timeline {
+      grid-template-columns: 1fr;
+    }
+    .nav-dots { display: none; }
+    .slide { padding: 60px 32px; }
+    .hero-blob { display: none; }
+    .concept-equation { flex-direction: column; align-items: flex-start; }
+    .venn { width: 260px; height: 260px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+<div class="progress-bar" id="progress-bar"></div>
+
+<nav class="nav-dots" id="nav-dots"></nav>
+
+<!-- SLIDE 1: HERO -->
+<section class="slide" id="slide-1" data-label="Início">
+  <div class="hero-bg"></div>
+  <div class="hero-blob"></div>
+  <div class="slide-inner">
+    <p class="hero-label">Lisboa · 11 Abril 2026 · Pink Edition</p>
+    <h1 class="hero-title">CHRO<span>MAN</span>TIC</h1>
+    <p class="hero-sub">Uma experiência de entretenimento multissensorial onde o ambiente dita a emoção.</p>
+    <div class="hero-date">
+      <span class="hero-date-pill">Lost Lisboa</span>
+      <span class="hero-date-text">12H → 23H &nbsp;·&nbsp; Sem telemóveis &nbsp;·&nbsp; Intergeracional</span>
+    </div>
+  </div>
+  <div class="scroll-hint">
+    <span class="scroll-text">Scroll</span>
+    <div class="scroll-line"></div>
+  </div>
+</section>
+
+<!-- SLIDE 2: PROBLEM -->
+<section class="slide" id="slide-2" data-label="Problema">
+  <div class="deco-bg-text" style="top:-40px;right:-40px;">LOST</div>
+  <div class="slide-inner">
+    <div class="problem-grid">
+      <div class="problem-statement reveal">
+        <span class="problem-tag">O Problema</span>
+        <h2 class="problem-headline">A urgência de documentar <em>substituiu</em> a capacidade de viver.</h2>
+        <p class="problem-body">A vida moderna acontece através do ecrã. A documentação excessiva criou uma crise de alienação digital — o público fisicamente presente, mentalmente ausente. A cultura tradicional reflete esta exaustão: escuridão, fadiga, isolamento.</p>
+      </div>
+      <div class="phones-visual reveal reveal-delay-2">
+        <div class="phone-row">
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+        </div>
+        <div class="phone-row">
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+        </div>
+        <div class="phone-row">
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+        </div>
+        <div class="phone-row">
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+          <div class="phone-icon crossed"></div>
+        </div>
+      </div>
+      <div class="manifesto-quote reveal reveal-delay-1">
+        <blockquote>Ninguém chega para ver — <strong>chega-se para existir.</strong></blockquote>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 3: CONCEPT -->
+<section class="slide" id="slide-3" data-label="Conceito">
+  <div class="slide-inner concept-inner">
+    <p class="concept-label reveal">A Equação do DNA Cultural</p>
+    <div class="concept-equation reveal reveal-delay-1">
+      <span class="concept-term">CHROMA</span>
+      <span class="concept-operator">[+]</span>
+      <span class="concept-term">ROMANTIC</span>
+      <span class="concept-operator">=</span>
+      <span class="concept-result">CHROMANTIC</span>
+    </div>
+    <div class="concept-cards">
+      <div class="concept-card reveal reveal-delay-1">
+        <div class="concept-card-title">CHROMA</div>
+        <p class="concept-card-body">Cor, vibração visual, pureza estética. A arte visual underground. Contraste, saturação e imersão sensorial — cada edição domina uma cor diferente.</p>
+      </div>
+      <div class="concept-card reveal reveal-delay-2">
+        <div class="concept-card-title">ROMANTIC</div>
+        <p class="concept-card-body">Emoção, entrega, ligação humana. A emoção da pista. Comunidade, conexão orgânica entre o público e o som. Romance coletivo.</p>
+      </div>
+      <div class="concept-card reveal reveal-delay-3">
+        <div class="concept-card-title">CHROMANTIC</div>
+        <p class="concept-card-body">Uma experiência imersiva total onde a estética visual e a música eletrónica convergem. Não um evento. Um ecossistema.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 4: FORMAT -->
+<section class="slide" id="slide-4" data-label="Formato">
+  <div class="slide-inner">
+    <p class="format-label reveal">A Revolução Diurna</p>
+    <h2 class="format-headline reveal reveal-delay-1">11 Horas.<br><span>Luz Natural.</span></h2>
+    <div class="timeline">
+      <div class="timeline-stop reveal reveal-delay-1">
+        <div class="timeline-dot"></div>
+        <span class="timeline-time">12H</span>
+        <div class="timeline-name">Open-Air Diurno</div>
+        <p class="timeline-desc">Warm-up com texturas sonoras sob a luz do dia. A pista acorda.</p>
+      </div>
+      <div class="timeline-stop reveal reveal-delay-2">
+        <div class="timeline-dot"></div>
+        <span class="timeline-time">16H</span>
+        <div class="timeline-name">O Groove de Tarde</div>
+        <p class="timeline-desc">Ritmos mais quentes e orgânicos à medida que a pista se compõe.</p>
+      </div>
+      <div class="timeline-stop reveal reveal-delay-3">
+        <div class="timeline-dot"></div>
+        <span class="timeline-time">19H</span>
+        <div class="timeline-name">Pôr-do-Sol</div>
+        <p class="timeline-desc">A ponte entre luz e escuridão. Frequências mais densas e hipnóticas.</p>
+      </div>
+      <div class="timeline-stop reveal reveal-delay-4">
+        <div class="timeline-dot"></div>
+        <span class="timeline-time">23H</span>
+        <div class="timeline-name">Intensidade de Clube</div>
+        <p class="timeline-desc">O clímax eletrónico. Mergulho total no lado negro e mental da dança.</p>
+      </div>
+    </div>
+    <div class="format-vs reveal reveal-delay-2">
+      <div class="vs-col">
+        <div class="vs-title">Night Clubbing</div>
+        <div class="vs-item"><span class="vs-icon">▪</span> Escuridão artificial</div>
+        <div class="vs-item"><span class="vs-icon">▪</span> Fadiga de madrugada</div>
+        <div class="vs-item"><span class="vs-icon">▪</span> Isolamento social</div>
+        <div class="vs-item"><span class="vs-icon">▪</span> Foco na evasão</div>
+      </div>
+      <div class="vs-col">
+        <div class="vs-title">Day Clubbing Chromantic</div>
+        <div class="vs-item"><span class="vs-icon">☺</span> Luz natural</div>
+        <div class="vs-item"><span class="vs-icon">☺</span> Ritmo biológico alinhado</div>
+        <div class="vs-item"><span class="vs-icon">☺</span> Socialização ativa</div>
+        <div class="vs-item"><span class="vs-icon">☺</span> Foco na conexão humana</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 5: ARTISTS -->
+<section class="slide" id="slide-5" data-label="Artistas">
+  <div class="deco-bg-text" style="bottom:-60px;left:-20px;opacity:0.03;">SOUND</div>
+  <div class="slide-inner">
+    <p class="artists-label reveal">Os Arquitetos Sonoros</p>
+    <h2 class="artists-headline reveal reveal-delay-1">4 Sets.<br>1 Jornada.</h2>
+    <div class="artists-grid">
+      <div class="artist-card reveal reveal-delay-1">
+        <div class="artist-num">01</div>
+        <div class="artist-name">André Cascais</div>
+        <div class="artist-genre">House & Groove</div>
+        <p class="artist-vibe">Energia dinâmica e contagiante. A base perfeita para a transição de final de tarde.</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-2">
+        <div class="artist-num">02</div>
+        <div class="artist-name">André S</div>
+        <div class="artist-genre">Deep & Ethereal</div>
+        <p class="artist-vibe">Texturas imersivas e batidas compassadas que convidam à introspeção na pista.</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-3">
+        <div class="artist-num">03</div>
+        <div class="artist-name">CVLT</div>
+        <div class="artist-genre">Raw & Dark</div>
+        <p class="artist-vibe">Intensidade industrial, desenhada para elevar os BPMs e dominar a noite.</p>
+      </div>
+      <div class="artist-card reveal reveal-delay-4">
+        <div class="artist-num">04</div>
+        <div class="artist-name">Switchdance</div>
+        <div class="artist-genre">Cosmic Hypnosis</div>
+        <p class="artist-vibe">Uma viagem mental imprevisível, cruzando ritmos lentos com elementos psicodélicos.</p>
+      </div>
+    </div>
+    <p class="reveal reveal-delay-5" style="margin-top:32px;font-size:14px;color:rgba(250,245,239,0.35);letter-spacing:1px;">+ Arte ao vivo por Vulva Bel · Cenografia: Nita Bonita & AJUA</p>
+  </div>
+</section>
+
+<!-- SLIDE 6: AUDIENCE -->
+<section class="slide" id="slide-6" data-label="Público">
+  <div class="slide-inner">
+    <div class="audience-grid">
+      <div class="audience-text reveal">
+        <span class="problem-tag">Disrupção Intergeracional</span>
+        <h2 class="audience-headline" style="margin-top:20px;">A pista <em>não tem idade.</em></h2>
+        <p class="audience-body">O formato diurno (12h–23h) desmantela a exclusividade do nicho juvenil. Um espaço seguro onde jovens adultos, famílias e público sénior coexistem — pela primeira vez, na mesma pista.</p>
+        <div class="social-badge">
+          <span>🤝</span>
+          <div>Parceria com <strong>Avó Veio Trabalhar</strong>. Os mais velhos não são convidados — são parte ativa da experiência artística.</div>
+        </div>
+      </div>
+      <div class="reveal reveal-delay-2" style="display:flex;justify-content:center;">
+        <div class="venn">
+          <div class="venn-circle vc1"></div>
+          <div class="venn-circle vc2"></div>
+          <div class="venn-circle vc3"></div>
+          <span class="vc-label vcl1">Jovens<br>Adultos</span>
+          <span class="vc-label vcl2">Seniores</span>
+          <span class="vc-label vcl3">Famílias</span>
+          <div class="venn-center">TODOS</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 7: IMPACT -->
+<section class="slide" id="slide-7" data-label="Impacto">
+  <div class="slide-inner">
+    <p class="impact-label reveal">Valor Regenerativo</p>
+    <h2 class="impact-headline reveal reveal-delay-1">3 Pilares<br>de Impacto.</h2>
+    <div class="pillars">
+      <div class="pillar reveal reveal-delay-1">
+        <div class="pillar-num">01</div>
+        <h3 class="pillar-title">Impacto Cultural</h3>
+        <p class="pillar-body">Promover a música eletrónica e a arte contemporânea como expressões artísticas profundas. A cultura como ferramenta de transformação social.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-2">
+        <div class="pillar-num">02</div>
+        <h3 class="pillar-title">Impacto Social</h3>
+        <p class="pillar-body">Criar encontros intergeracionais, combater a alienação digital e promover a inclusão. Um ecossistema social onde a presença é a obra de arte.</p>
+      </div>
+      <div class="pillar reveal reveal-delay-3">
+        <div class="pillar-num">03</div>
+        <h3 class="pillar-title">Impacto Territorial</h3>
+        <p class="pillar-body">Descentralizar a oferta cultural. Levar programação de excelência a diferentes regiões e territórios de baixa densidade.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 8: GROWTH -->
+<section class="slide" id="slide-8" data-label="Futuro">
+  <div class="slide-inner">
+    <h2 class="growth-headline reveal">Um Motor Cultural<br><span style="color:var(--pink);">Escalável.</span></h2>
+    <div class="phases">
+      <div class="phase reveal reveal-delay-1">
+        <div class="phase-dot"></div>
+        <div class="phase-num">1</div>
+        <div class="phase-year">2026 — Prova de Conceito</div>
+        <h3 class="phase-title">Pink Edition</h3>
+        <p class="phase-body">Lisboa + Zabra. Validação do formato: 11h, sem telemóveis, intergeracional. A primeira cor.</p>
+      </div>
+      <div class="phase reveal reveal-delay-2">
+        <div class="phase-dot"></div>
+        <div class="phase-num">2</div>
+        <div class="phase-year" style="color:#A060FF;">2026/27 — Expansão Nacional</div>
+        <h3 class="phase-title">Franquia Itinerante</h3>
+        <p class="phase-body">Rede de experiências. Porto, Braga, Algarve. Uma plataforma cultural adaptável a qualquer território.</p>
+      </div>
+      <div class="phase reveal reveal-delay-3">
+        <div class="phase-dot"></div>
+        <div class="phase-num">3</div>
+        <div class="phase-year" style="color:#40FF90;">2027 — Evolução Sensorial</div>
+        <h3 class="phase-title">Chromantic_02</h3>
+        <p class="phase-body">Uma nova cor. Uma nova estética. Uma nova dimensão sensorial. O projeto é contínuo.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SLIDE 9: CTA -->
+<section class="slide" id="slide-9" data-label="Parceria">
+  <div class="slide-inner">
+    <div class="cta-inner reveal" style="text-align: center;">
+      <span class="cta-smiley">☺</span>
+      
+      <h2 class="cta-headline">Faça parte<br>da primeira<br>cor.</h2>
+      
+      <p class="cta-sub">
+        Patrocinar a Edição 01 é mais do que visibilidade. 
+        É garantir lugar na linha da frente de um novo paradigma cultural.
+      </p>
+
+      <div class="cta-contact" style="margin: 2rem 0; display: flex; flex-direction: column; gap: 0.5rem; align-items: center;">
+        <strong style="display: block; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -0.02em;">
+          Catarina Beja
+        </strong>
+        
+        <p style="margin: 0; font-size: 1.1rem; font-weight: 300;">
+          <a href="mailto:cathe@nitabonitastudio.com" target="_blank" rel="noopener noreferrer" 
+            style="text-decoration: none; color: inherit; transition: color 0.3s ease;"
+            onmouseover="this.style.color='#FF2D78'" 
+            onmouseout="this.style.color='inherit'">
+            cathe@nitabonitastudio.com
+          </a>
+        </p>
+        
+        <p style="margin: 0; font-size: 1.1rem; font-weight: 300;">
+          <a href="tel:+351915522370" target="_blank" rel="noopener noreferrer" 
+            style="text-decoration: none; color: inherit; transition: color 0.3s ease;"
+            onmouseover="this.style.color='#FF2D78'" 
+            onmouseout="this.style.color='inherit'">
+            (+351) 91 55 22 370
+          </a>
+        </p>
+
+        <div style="display: flex; justify-content: center; gap: 20px; margin-top: 1.5rem; align-items: center;">
+          
+          <a href="https://wa.me/351915522370" target="_blank" rel="noopener noreferrer" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" style="width: 30px !important; height: 30px !important; display: block;" alt="WhatsApp">
+          </a>
+          
+          <a href="https://www.instagram.com/nitabonita_studio" target="_blank" rel="noopener noreferrer" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/e7/Instagram_logo_2016.svg" style="width: 30px !important; height: 30px !important; display: block;" alt="Instagram">
+          </a>
+          
+          <a href="https://www.linkedin.com/company/nita-bonita/" target="_blank" rel="noopener noreferrer" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" style="width: 30px !important; height: 30px !important; display: block;" alt="LinkedIn">
+          </a>
+          
+          <a href="https://shotgun.live/venues/nita-bonita" target="_blank" rel="noopener noreferrer" style="transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.1)'" onmouseout="this.style.transform='scale(1)'">
+              <img src="https://shotgun.live/favicon.ico" style="width: 30px !important; height: 30px !important; display: block; border-radius: 50%;" alt="Shotgun">
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div id="nav-control" class="fixed bottom-6 right-6 z-[10000] opacity-100 transition-opacity duration-500 pointer-events-auto">
+    <a href="index.html" class="group relative overflow-hidden w-24 h-12 rounded-xl border border-white/20 flex items-center justify-center shadow-2xl bg-black/60 backdrop-blur-md transition-all duration-500 hover:border-[#FF2D78]">
+        
+        <video autoplay loop muted playsinline class="absolute inset-0 w-full h-full object-cover opacity-60 group-hover:opacity-20 transition-opacity duration-500">
+            <source src="assets/Logo-smoke.mp4" type="video/mp4">
+        </video>
+
+        <span class="relative z-10 text-white tracking-[0.3em] text-[10px] font-bold uppercase opacity-0 group-hover:opacity-100 group-hover:scale-110 transition-all duration-500">
+            HOME
+        </span>
+
+        <div class="absolute inset-0 bg-[#FF2D78]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+    </a>
+</div>
+
+<script>
+// Mantendo o teu código do Cursor
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top = my + 'px';
+});
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  ring.style.left = rx + 'px';
+  ring.style.top = ry + 'px';
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+// Lógica de Scroll e Botão Home
+const navControl = document.getElementById('nav-control');
+const progressBar = document.getElementById('progress-bar');
+const slides = Array.from(document.querySelectorAll('.slide'));
+const navDots = document.getElementById('nav-dots');
+
+// Gerar dots
+slides.forEach((s, i) => {
+  const dot = document.createElement('div');
+  dot.className = 'nav-dot';
+  dot.addEventListener('click', () => s.scrollIntoView({ behavior: 'smooth' }));
+  navDots.appendChild(dot);
+});
+
+function updateNav() {
+  const scrollY = window.scrollY;
+  const totalH = document.documentElement.scrollHeight - window.innerHeight;
+  
+  // Atualiza barra de progresso
+  if (progressBar) progressBar.style.width = (scrollY / totalH * 100) + '%';
+
+  // Dots ativos
+  let activeIdx = 0;
+  slides.forEach((s, i) => {
+    const rect = s.getBoundingClientRect();
+    if (rect.top <= window.innerHeight / 2) activeIdx = i;
+  });
+  const dots = navDots.querySelectorAll('.nav-dot');
+  dots.forEach((d, i) => d.classList.toggle('active', i === activeIdx));
+}
+
+// Reveal Observer
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) e.target.classList.add('visible');
+  });
+}, { threshold: 0.1 });
+reveals.forEach(r => observer.observe(r));
+
+window.addEventListener('scroll', updateNav);
+// Executar uma vez no load
+updateNav();
+</script>
+</body>
+</html>

@@ -75,6 +75,22 @@
 
 <body class="bg-[#D9D8D7] text-black">
 
+    <div class="fixed top-6 right-6 z-[10000]">
+        <a href="#experiencias" 
+        onmouseover="this.style.backgroundImage='linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(\'assets/Chromantic_Banner.avif\')'; this.style.backgroundSize='cover'; this.style.backgroundPosition='center'; this.style.borderColor='rgba(255,45,120,0.5)'"
+        onmouseout="this.style.backgroundImage='none'; this.style.backgroundColor='#FF2D78'; this.style.borderColor='rgba(255,255,255,0.2)'"
+        class="bg-[#FF2D78] text-white px-6 py-5 rounded-full font-bold tracking-widest text-xs md:text-sm transition-all duration-500 shadow-2xl flex items-center gap-2 border border-white/20 overflow-hidden"
+        style="transition: all 0.5s ease; background-repeat: no-repeat;">
+            
+            <span class="relative flex h-2 w-2">
+                <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#FFB3CC] opacity-75"></span>
+                <span class="relative inline-flex rounded-full h-2 w-2 bg-[#FFB3CC]"></span>
+            </span>
+            
+            <span class="relative z-10">NEXT: CHROMANTIC</span>
+        </a>
+    </div>
+
     <div id="left-nav" class="fixed bottom-3 left-3 z-[9999] flex flex-col items-center gap-3 transition-opacity duration-500">
         <a href="https://wa.me/351915522370" target="_blank" rel="noopener noreferrer" 
         class="group flex items-center justify-center w-10 h-10 md:w-14 md:h-14 rounded-full border border-black/10 bg-white/10 backdrop-blur-sm text-black hover:bg-[#25D366] hover:text-white transition-all duration-300 shadow-lg">
@@ -169,7 +185,7 @@
                         <p class="opacity-90">Conexões entre público, arte e natureza.</p>
                     </div>
                     <div class="mt-16">
-                        <a href="#about" class="inline-flex items-center justify-center rounded-md border-2 border-white px-10 h-12 text-lg tracking-widest uppercase hover:bg-white hover:text-[#F289AD] transition-all">
+                        <a href="#contact" class="inline-flex items-center justify-center rounded-md border-2 border-white px-10 h-12 text-lg tracking-widest uppercase hover:bg-white hover:text-[#F289AD] transition-all">
                             About
                         </a>
                     </div>
@@ -203,24 +219,81 @@
                     <h2 class="text-4xl md:text-8xl font-light tracking-widest md:tracking-[0.2em] mb-16 uppercase">
                         Experiências<br>que se sentem
                     </h2>
-                    <div class="space-y-12">
-                        <div>
-                            <h3 class="text-xl md:text-4xl font-normal uppercase mb-2">Just So Portugal</h3>
-                            <p class="text-lg md:text-2xl font-light opacity-70">Festival imersivo, narrativa integrada.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl md:text-4xl font-normal uppercase mb-2">Eventos Culturais e Corporativos</h3>
-                            <p class="text-lg md:text-2xl font-light opacity-70">Direção e produção precisas.</p>
-                        </div>
-                        <div>
-                            <h3 class="text-xl md:text-4xl font-normal uppercase mb-2">Colaborações & Activations</h3>
-                            <p class="text-lg md:text-2xl font-light opacity-70">Estética, fluxo, sensorialidade.</p>
-                        </div>
-                    </div>
-                    <div class="mt-16 flex justify-center">
-                        <a href="#projects" class="inline-flex items-center justify-center rounded-md border-2 border-black px-10 h-12 text-lg tracking-widest uppercase hover:bg-black hover:text-[#DCF28D] transition-all">
-                            See Projects
+
+                    <div class="mb-24 transform hover:scale-[1.01] transition-all duration-500 relative group mx-auto max-w-4xl">
+                        <a href="chromantic.html" class="block relative bg-black text-white p-8 md:p-12 rounded-3xl shadow-[0_20px_50px_rgba(255,45,120,0.3)] overflow-hidden border border-white/10 text-left">
+                            
+                            <div class="absolute inset-0 z-0">
+                                <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-30 group-hover:opacity-50 transition-opacity scale-100">
+                                    <source src="assets/Chromantic_Banner.webm" type="video/mp4">
+                                </video>
+                            </div>
+
+                            <div class="relative z-10">
+                                <span class="bg-[#FF2D78] text-white px-4 py-1 rounded-full text-xs font-bold tracking-widest uppercase mb-8 inline-flex items-center gap-2">
+                                    <span class="w-2 h-2 bg-white rounded-full animate-pulse"></span>
+                                    Próxima Experiência
+                                </span>
+                                
+                                <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-10">
+                                    <div class="flex-grow">
+                                        <h3 class="text-5xl md:text-7xl font-black uppercase mb-4 tracking-tighter leading-none group-hover:text-[#FF2D78] transition-colors duration-300">
+                                            CHROMANTIC
+                                        </h3>
+                                        <div class="w-0 group-hover:w-32 h-1 bg-[#FF2D78] transition-all duration-500"></div>
+                                        
+                                        <p class="text-xl md:text-3xl font-light opacity-90 mb-4 mt-4">Lisboa • 11 de Abril, 2026</p>
+                                        <p class="text-sm md:text-lg opacity-60 uppercase tracking-[0.2em] leading-relaxed max-w-xl">
+                                            Uma experiência de entretenimento multissensorial onde o ambiente dita a emoção.
+                                        </p>
+                                    </div>
+                                    
+                                    <div class="flex flex-col gap-4 w-full md:w-auto">
+                                    <object>
+                                        <a href="https://shotgun.live/en/events/chromantic-01-pink-edition" target="_blank" rel="noopener noreferrer" 
+                                        onmouseover="this.style.background='linear-gradient(45deg, #746BBF 0%, #E1306C 50%, #25D366 100%)'; this.style.border='2px solid transparent'; this.style.transform='scale(1)'"
+                                        onmouseout="this.style.background='#FF2D78'; this.style.border='2px solid #FF2D78'; this.style.transform='scale(1)'"
+                                        class="relative z-20 block bg-[#FF2D78] text-white px-10 py-5 rounded-2xl font-black tracking-widest text-center border-2 border-[#FF2D78] shadow-lg shadow-[#FF2D78]/20 transition-all duration-500"
+                                        style="transition: all 0.5s ease;">
+                                            COMPRAR BILHETES
+                                        </a>
+                                    </object>
+                                        <span class="text-white/50 group-hover:text-white text-center text-xs tracking-widest uppercase transition-all">
+                                            Ver Detalhes +
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-[#FF2D78] rounded-full blur-[120px] opacity-20 pointer-events-none"></div>
                         </a>
+                    </div>
+
+                    <div class="mt-24">
+                        <h4 class="text-xs tracking-[0.5em] uppercase mb-16 opacity-40 font-bold italic">O que vem depois • Em Preparação</h4>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-12 text-center">
+                            <div class="group">
+                                <h3 class="text-xl md:text-3xl font-light uppercase mb-2 tracking-wider group-hover:text-[#746BBF] transition-colors">Just So Portugal</h3>
+                                <p class="text-sm md:text-base font-light opacity-60 uppercase tracking-widest">Festival imersivo</p>
+                            </div>
+                            
+                            <div class="group">
+                                <h3 class="text-xl md:text-3xl font-light uppercase mb-2 tracking-wider group-hover:text-[#746BBF] transition-colors">Culturais & Corporativos</h3>
+                                <p class="text-sm md:text-base font-light opacity-60 uppercase tracking-widest">Direção e produção</p>
+                            </div>
+                            
+                            <div class="group">
+                                <h3 class="text-xl md:text-3xl font-light uppercase mb-2 tracking-wider group-hover:text-[#746BBF] transition-colors">Activations</h3>
+                                <p class="text-sm md:text-base font-light opacity-60 uppercase tracking-widest">Estética sensorial</p>
+                            </div>
+                        </div>
+
+                        <div class="mt-20 flex justify-center">
+                            <a href="#projects" class="inline-flex items-center justify-center rounded-md border-2 border-black px-12 h-14 text-lg tracking-[0.2em] font-bold uppercase hover:bg-black hover:text-[#DCF28D] transition-all duration-300">
+                                See Projects
+                            </a>
+                        </div>
                     </div>
                 </div>
             </section>
